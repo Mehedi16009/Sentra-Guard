@@ -14,7 +14,9 @@ vi. Human-in-the-loop adaptive vector injection <br>
 vii. Baseline benchmarking and evaluation pipeline <br>
 
 ## Repository Structure
-``Sentra-Guard/
+
+```text
+Sentra-Guard/
 ├── README.md
 ├── requirements.txt
 ├── LICENSE
@@ -38,8 +40,9 @@ vii. Baseline benchmarking and evaluation pipeline <br>
     ├── index/
     ├── metrics/
     ├── logs/
-    └── config/ 
-    ``
+    └── config/
+```
+
 
 ## Installation
 ``pip install -r requirements.txt``
@@ -87,11 +90,14 @@ Run all cells sequentially.
 8. HITL escalation if uncertain <br>
 
 
-## Risk Fusion <br>
+## Decision Fusion
 
- Final score:
-``
-S_final = w1·P_C + w2·R_score + w3·P_Z``
+The final risk score is computed as:
+
+```text
+S_final = (w1 * P_C) + (w2 * R_score) + (w3 * P_Z)
+```
+
 
 Fusion weights are tuned on validation data and stored in:
 ``
@@ -102,7 +108,12 @@ artifacts/config/run_config.json
 
 Escalation triggers: <br>
 
-1. |S_final - theta| < delta<br>
+1. Escalation condition:
+
+```text
+abs(S_final - theta) < delta
+```
+
 2. branch disagreement > threshold <br>
 
 Confirmed harmful prompts:

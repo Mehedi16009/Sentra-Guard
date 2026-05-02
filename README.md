@@ -18,12 +18,23 @@ sentra-guard/
 ├── reproduction.md
 ├── dataset_notes.md
 ├── .gitignore
+│
+├── figures/
+│   ├── architecture.png
+│   ├── pipeline_overview.png
+│   ├── roc_curve.png
+│   ├── pr_curve.png
+│   ├── threshold_sweep.png
+│   └── confusion_matrix.png
+│
 ├── artifacts/
 │   └── .gitkeep
+│
 ├── scripts/
 │   ├── reproduce_huggingface.sh
 │   ├── reproduce_local.sh
 │   └── run_sanity_tests.sh
+│
 ├── src/
 │   └── sentra_guard/
 │       ├── __init__.py
@@ -36,6 +47,7 @@ sentra-guard/
 │       ├── inference.py
 │       ├── evaluate.py
 │       └── run_experiments.py
+│
 └── tests/
     ├── conftest.py
     └── test_sanity.py

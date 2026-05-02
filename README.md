@@ -1,131 +1,109 @@
-# Sentra-Guard: A Real-Time Multilingual Defense Against Adversarial LLM Prompts
+# Sentra-Guard
 
-Sentra-Guard is a modular defense framework for detecting adversarial jailbreak and prompt-injection attacks against large language models (LLMs). The system combines multilingual normalization, semantic retrieval, transformer-based classification, zero-shot semantic reasoning, weighted risk fusion, and Human-in-the-Loop (HITL) adaptation to provide fast and robust protection across multilingual and obfuscated attack scenarios.
+Reproducibility-ready repository for the paper **Sentra-Guard: A Real-Time Multilingual Defense Against Adversarial LLM Prompts**.
 
-This repository provides the official implementation of the Sentra-Guard pipeline and supports reproducibility for the accompanying ACM TOPS manuscript.
+This repository converts the Colab implementation into a modular Python package with deterministic execution, saved checkpoints, cached preprocessing outputs, and manuscript-faithful experiment scripts. The pipeline preserves the core equations used in the paper:
 
-## Core Features <br>
-i. Multilingual prompt normalization (100+ languages) <br>
-ii. SBERT-based semantic retrieval with FAISS <br>
-iii. Fine-tuned DeBERTa-v3 binary harmful prompt classifier <br> 
-iv. Zero-shot NLI branch for out-of-distribution attack detection <br>
-v. Validation-calibrated fusion scoring <br>
-vi. Human-in-the-loop adaptive vector injection <br>
-vii. Baseline benchmarking and evaluation pipeline <br>
+- `S_final = w1 * P_C + w2 * R_score + w3 * P_Z`
+- `R_score = Σ(sim_i * y_i) / Σ(sim_i)`
+- `HITL uncertainty = abs(S_final - theta) < delta`
 
-## Repository Structure
+## Repository Layout
 
 ```text
-Sentra-Guard/
+sentra-guard/
 ├── README.md
-├── LICENSE
 ├── requirements.txt
 ├── environment.yml
+├── reproduction.md
+├── dataset_notes.md
 ├── .gitignore
-├── manuscript/
-├── notebooks/
-├── src/
-├── scripts/
 ├── artifacts/
-├── tests/
-└── docs/
+│   └── .gitkeep
+├── scripts/
+│   ├── reproduce_huggingface.sh
+│   ├── reproduce_local.sh
+│   └── run_sanity_tests.sh
+├── src/
+│   └── sentra_guard/
+│       ├── __init__.py
+│       ├── __main__.py
+│       ├── config.py
+│       ├── data.py
+│       ├── train.py
+│       ├── retrieval.py
+│       ├── fusion.py
+│       ├── inference.py
+│       ├── evaluate.py
+│       └── run_experiments.py
+└── tests/
+    ├── conftest.py
+    └── test_sanity.py
 ```
 
+## Quick Start
 
-## Installation
-``pip install -r requirements.txt``
+Create the environment:
 
-## Dataset Setup
-
-Place datasets under:
-``
-data/raw/``
-
-Required schema:
-
-prompt (text)<br>
-label (0 = benign, 1 = harmful) <br>
-
-Optional:
-
-language <br>
-source <br>
-role <br>
-
-## Training
-``python scripts/train.py``
-## Build Retrieval Index
-``python scripts/build_index.py``
-## Inference
-``python scripts/inference.py --prompt "How can I bypass content moderation?"``
-
-## Google Colab
-
-Open:
-``
-notebooks/sentra_guard_colab.ipynb
-``
-Run all cells sequentially.
-
-## Model Pipeline<br>
-1. Language detection <br>
-2. Translation normalization<br>
-3. SBERT embedding generation<br>
-4. FAISS nearest-neighbor retrieval<br>
-5. DeBERTa-v3 harmful prompt classification<br>
-6. Zero-shot entailment scoring<br>
-7. Fusion risk computation <br>
-8. HITL escalation if uncertain <br>
-
-
-## Decision Fusion
-
-The final risk score is computed as:
-
-```text
-S_final = (w1 * P_C) + (w2 * R_score) + (w3 * P_Z)
+```bash
+conda env create -f environment.yml
+conda activate sentra-guard
 ```
 
+Run the Hugging Face reproduction pipeline:
 
-Fusion weights are tuned on validation data and stored in:
-``
-artifacts/config/run_config.json
-``
-
-## HITL Logic
-
-Escalation triggers: <br>
-
-1. Escalation condition:
-
-```text
-abs(S_final - theta) < delta
+```bash
+bash scripts/reproduce_huggingface.sh
 ```
 
-2. branch disagreement > threshold <br>
+Run the local fallback:
 
-Confirmed harmful prompts:
+```bash
+D1_PATH=/absolute/path/to/d1.csv \
+D2_PATH=/absolute/path/to/d2.csv \
+bash scripts/reproduce_local.sh
+```
 
-i. inserted into FAISS index <br>
-ii. appended into training buffer <br>
+Run sanity checks:
 
+```bash
+bash scripts/run_sanity_tests.sh
+```
 
-## Reproducibility
+## Main Outputs
 
-Fixed seeds:
+All run artifacts are written under `artifacts/`:
 
-i. Python <br>
-ii. NumPy <br>
-iii. PyTorch <br>
+- `config.json`
+- `metrics.csv`
+- `predictions.csv`
+- `threshold_search.csv`
+- `weight_search.csv`
+- `ablation.csv`
+- `confusion_matrix.csv`
+- `runtime_profiles.csv`
+- `training_logs.csv`
+- `artifact_manifest.json`
+- `cache/`
+- `checkpoints/`
+- `retrieval/`
+- `logs/`
 
-Saved artifacts:
+## Data Sources
 
-i. trained classifier <br>
-ii. FAISS index <br>
-iii. metrics <br>
-iv. run configuration <br>
+Default Hugging Face datasets:
 
+- `YinkaiW/harmbench-dataset`
+- `JailbreakV-28K/JailBreakV-28k`
 
-## Citation
+See [dataset_notes.md](./dataset_notes.md) for the normalization schema, label mapping, and the D2 held-out construction logic.
 
-Add manuscript citation after publication.
+## Reproducibility Notes
+
+- Global seed is fixed to `42`.
+- Deterministic PyTorch and CUDA settings are enabled.
+- Early stopping and checkpoint saving are enabled for the classifier.
+- Preprocessed splits and scored outputs are saved to `artifacts/cache/`.
+- The zero-shot branch supports both the default model and a faster runtime option while preserving the same NLI scoring logic.
+
+The exact execution recipe is documented in [reproduction.md](./reproduction.md).

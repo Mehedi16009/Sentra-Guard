@@ -1,12 +1,22 @@
 # Sentra-Guard
 
-Reproducibility-ready repository for the paper **Sentra-Guard: A Real-Time Multilingual Defense Against Adversarial LLM Prompts**.
+Reproducibility-ready repository for the paper:
 
-This repository converts the Colab implementation into a modular Python package with deterministic execution, saved checkpoints, cached preprocessing outputs, and manuscript-faithful experiment scripts. The pipeline preserves the core equations used in the paper:
+**Sentra-Guard: A Real-Time Multilingual Defense Against Adversarial LLM Prompts**
 
-- `S_final = w1 * P_C + w2 * R_score + w3 * P_Z`
-- `R_score = Σ(sim_i * y_i) / Σ(sim_i)`
-- `HITL uncertainty = abs(S_final - theta) < delta`
+This repository provides the modular implementation of Sentra-Guard, converted from the original Google Colab experimental pipeline into a reproducibility-oriented Python package with deterministic execution, checkpoint persistence, cached preprocessing, and manuscript-faithful evaluation workflows.
+
+The implementation preserves the core manuscript equations:
+
+```text
+S_final = w1 · P_C + w2 · R_score + w3 · P_Z
+
+R_score = Σ(sim_i · y_i) / Σ(sim_i)
+
+HITL uncertainty = |S_final − θ| < δ
+```
+
+---
 
 ## Repository Layout
 
@@ -53,22 +63,34 @@ sentra-guard/
     └── test_sanity.py
 ```
 
-## Quick Start
+---
 
-Create the environment:
+## Installation
+
+Create the reproducibility environment:
 
 ```bash
 conda env create -f environment.yml
 conda activate sentra-guard
 ```
 
-Run the Hugging Face reproduction pipeline:
+Alternatively:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Quick Start
+
+### Reproduce experiments using Hugging Face datasets
 
 ```bash
 bash scripts/reproduce_huggingface.sh
 ```
 
-Run the local fallback:
+### Reproduce experiments using local datasets
 
 ```bash
 D1_PATH=/absolute/path/to/d1.csv \
@@ -76,46 +98,94 @@ D2_PATH=/absolute/path/to/d2.csv \
 bash scripts/reproduce_local.sh
 ```
 
-Run sanity checks:
+### Run sanity tests
 
 ```bash
 bash scripts/run_sanity_tests.sh
 ```
 
+---
+
 ## Main Outputs
 
-All run artifacts are written under `artifacts/`:
+All generated artifacts are stored under `artifacts/`.
 
-- `config.json`
-- `metrics.csv`
-- `predictions.csv`
-- `threshold_search.csv`
-- `weight_search.csv`
-- `ablation.csv`
-- `confusion_matrix.csv`
-- `runtime_profiles.csv`
-- `training_logs.csv`
-- `artifact_manifest.json`
-- `cache/`
-- `checkpoints/`
-- `retrieval/`
-- `logs/`
+```text
+artifacts/
+├── config.json
+├── metrics.csv
+├── predictions.csv
+├── threshold_search.csv
+├── weight_search.csv
+├── ablation.csv
+├── confusion_matrix.csv
+├── runtime_profiles.csv
+├── training_logs.csv
+├── artifact_manifest.json
+├── cache/
+├── checkpoints/
+├── retrieval/
+└── logs/
+```
+
+---
 
 ## Data Sources
 
-Default Hugging Face datasets:
+Default datasets are loaded from :contentReference[oaicite:1]{index=1}:
 
 - `YinkaiW/harmbench-dataset`
 - `JailbreakV-28K/JailBreakV-28k`
 
-See [dataset_notes.md](./dataset_notes.md) for the normalization schema, label mapping, and the D2 held-out construction logic.
+See `dataset_notes.md` for:
+
+- schema normalization
+- label mapping
+- multilingual preprocessing
+- external held-out benchmark construction
+
+---
 
 ## Reproducibility Notes
 
-- Global seed is fixed to `42`.
-- Deterministic PyTorch and CUDA settings are enabled.
-- Early stopping and checkpoint saving are enabled for the classifier.
-- Preprocessed splits and scored outputs are saved to `artifacts/cache/`.
-- The zero-shot branch supports both the default model and a faster runtime option while preserving the same NLI scoring logic.
+- Global random seed is fixed to `42`
+- Deterministic PyTorch and CUDA execution are enabled
+- Classifier training uses checkpointing and early stopping
+- Preprocessed data splits are cached under `artifacts/cache/`
+- Retrieval indices and embeddings are persisted for reproducibility
+- Zero-shot inference supports both default and optimized runtime models
+- Full reproduction instructions are documented in `reproduction.md`
 
-The exact execution recipe is documented in [reproduction.md](./reproduction.md).
+---
+
+## Figures
+
+Manuscript figures are stored under `figures/`, including:
+
+- system architecture
+- pipeline overview
+- ROC curve
+- precision-recall curve
+- threshold optimization curve
+- confusion matrix
+
+---
+
+## Citation
+
+If you use this repository, please cite:
+
+```bibtex
+@article{sentraguard2026,
+  title={Sentra-Guard: A Real-Time Multilingual Defense Against Adversarial LLM Prompts},
+  author={Md Mehedi Hasan and others},
+  journal={Under Review},
+  year={2026}
+}
+```
+
+---
+
+## License
+
+This repository is released under the LICENSE included in this repository.

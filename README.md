@@ -22,54 +22,13 @@ Sentra-Guard/
 ├── requirements.txt
 ├── environment.yml
 ├── .gitignore
-│
 ├── manuscript/
-│   └── sentra_guard_paper.pdf
-│
 ├── notebooks/
-│   └── sentra_guard_reproducibility.ipynb
-│
 ├── src/
-│   ├── config.py
-│   ├── train.py
-│   ├── evaluate.py
-│   ├── retrieval.py
-│   ├── fusion.py
-│   ├── inference.py
-│   └── utils.py
-│
 ├── scripts/
-│   ├── run_train.sh
-│   ├── run_eval.sh
-│   ├── run_ablation.sh
-│   ├── run_threshold_search.sh
-│   ├── run_weight_search.sh
-│   └── sanity_test.sh
-│
 ├── artifacts/
-│   ├── checkpoints/
-│   ├── metrics/
-│   │   ├── metrics.csv
-│   │   ├── ablation.csv
-│   │   ├── threshold_search.csv
-│   │   ├── weight_search.csv
-│   │   ├── confusion_matrix.csv
-│   │   └── predictions.csv
-│   │
-│   └── figures/
-│       ├── roc_curve.png
-│       ├── pr_curve.png
-│       └── architecture.png
-│
 ├── tests/
-│   ├── label_audit.py
-│   ├── sanity_test.py
-│   └── smoke_test.py
-│
 └── docs/
-    ├── reproduction.md
-    └── dataset_notes.md
-
 ```
 
 

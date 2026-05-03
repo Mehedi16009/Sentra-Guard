@@ -38,7 +38,11 @@ sentra-guard/
 │   └── confusion_matrix.png
 │
 ├── artifacts/
-│   └── .gitkeep
+│   └── ablation.csv
+│   └──artifact_manifest.json
+│   └──config.json
+│   └──confution_matrix.csv
+│   └──metrics.csv
 │
 ├── scripts/
 │   ├── reproduce_huggingface.sh

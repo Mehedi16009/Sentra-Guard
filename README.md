@@ -134,8 +134,8 @@ artifacts/
 
 Default datasets are loaded from :contentReference[oaicite:1]{index=1}:
 
-- `[YinkaiW/harmbench-dataset](https://huggingface.co/datasets/Spony/harmbench-dataset)`
-- `[JailbreakV-28K/JailBreakV-28k](https://huggingface.co/datasets/JailbreakV-28K/JailBreakV-28k)`
+- [YinkaiW/harmbench-dataset](https://huggingface.co/datasets/Spony/harmbench-dataset)
+- [JailbreakV-28K/JailBreakV-28k](https://huggingface.co/datasets/JailbreakV-28K/JailBreakV-28k)
 
 See `dataset_notes.md` for:
 

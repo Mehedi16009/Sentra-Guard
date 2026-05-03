@@ -9,13 +9,43 @@ This repository provides the modular implementation of Sentra-Guard, converted f
 The implementation preserves the core manuscript equations:
 
 ```text
-S_final = w1 · P_C + w2 · R_score + w3 · P_Z
-
-R_score = Σ(sim_i · y_i) / Σ(sim_i)
-
-HITL uncertainty = |S_final − θ| < δ
+S_final(x) = w_c P_c(x) + w_r R(x) + w_z P_z(x)
 ```
+Where:
 
+- x = input prompt
+- P_c(x) ∈ [0,1] = classifier harmful probability
+- R(x) ∈ [0,1] = retrieval branch score
+- P_z(x) ∈ [0,1] = zero-shot harmful probability
+
+Weight constraints:
+```
+w_c + w_r + w_z = 1 and w_c, w_r, w_z ≥ 0
+```
+Retrieval Score Equation:
+```
+R(x) = (Σ(i=1→k) s_i y_i) / (Σ(i=1→k) s_i)
+```
+Where:
+
+* k = number of retrieved neighbors
+* s_i = cosine similarity between x and retrieved sample i
+* y_i ∈ {0,1} = harmfulness label
+
+Clarification:
+
+* Higher similarity to harmful prompts increases R(x).
+
+HITL Trigger Condition:
+
+```
+H(x) = 1, if |S_final(x) − θ| < δ
+
+```
+Where:
+
+* δ = uncertainty margin
+  
 ---
 
 ## Repository Layout

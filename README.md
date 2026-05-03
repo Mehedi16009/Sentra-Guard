@@ -176,11 +176,11 @@ Manuscript figures are stored under `figures/`, including:
 If you use this repository, please cite:
 
 ```bibtex
-@article{sentraguard2026,
-  title={Sentra-Guard: A Real-Time Multilingual Defense Against Adversarial LLM Prompts},
-  author={Md Mehedi Hasan and others},
-  journal={Under Review},
-  year={2026}
+@article{hasan2025sentra,
+  title={Sentra-Guard: A Multilingual Human-AI Framework for Real-Time Defense Against Adversarial LLM Jailbreaks},
+  author={Hasan, Md Mehedi and Mehedi, Sk Tanzir and Rahman, Ziaur and Mostafiz, Rafid and Hossain, Md Abir},
+  journal={arXiv preprint arXiv:2510.22628},
+  year={2025}
 }
 ```
 

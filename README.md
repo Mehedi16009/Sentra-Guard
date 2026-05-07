@@ -4,7 +4,6 @@
 
 Sentra-Guard integrates multilingual translation, SBERT-FAISS semantic retrieval, fine-tuned transformer classification, zero-shot natural language inference, and human-in-the-loop adaptive feedback into a unified detection pipeline. The system processes each prompt through three parallel inference branches and fuses their outputs into a single risk score, enabling detection of known, obfuscated, and zero-day jailbreak strategies across more than 100 languages.
 
-> **Under Review:** ACM Transactions on Privacy and Security (TOPS)
 
 ---
 
@@ -373,18 +372,19 @@ After running the full pipeline, `outputs/` contains:
 
 ## Citation
 
-If you use Sentra-Guard in your research, please cite the following manuscript:
+If you use this repository, please cite:
 
 ```bibtex
-@article{sentra-guard-tops,
-  title   = {Sentra-Guard: A Hybrid Real-Time Defense Framework for Multilingual Adversarial Jailbreak Detection in Large Language Models},
-  journal = {ACM Transactions on Privacy and Security},
-  note    = {Under review},
-  year    = {2025}
+@article{hasan2025sentra,
+  title={Sentra-Guard: A Multilingual Human-AI Framework for Real-Time Defense Against Adversarial LLM Jailbreaks},
+  author={Hasan, Md Mehedi and Mehedi, Sk Tanzir and Rahman, Ziaur and Mostafiz, Rafid and Hossain, Md Abir},
+  journal={arXiv preprint arXiv:2510.22628},
+  year={2025}
 }
 ```
 
 ---
+
 
 ## License
 

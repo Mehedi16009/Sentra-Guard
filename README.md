@@ -32,11 +32,10 @@ This architecture enables robust defense against:
 
 ### Core Pipeline
 
-[Figure_2.pdf](https://github.com/user-attachments/files/27548354/Figure_2.pdf)
+<img width="700" height="600" alt="Methodology" src="https://github.com/user-attachments/assets/1488f8f1-de80-4399-b756-a990ce631886" />
 
-```text
 Figure 1. Sentra-Guard framework overview: An end-to-end multilingual human-AI defense pipeline for real-time adversarial LLM jailbreak detection, integrating input normalization, fine-tuned classifier inference, SBERT-FAISS semantic retrieval, zero-shot NLI reasoning, hybrid risk fusion, threshold-based decision making, and human-in-the-loop adaptive memory updates.
-```
+
 
 
 

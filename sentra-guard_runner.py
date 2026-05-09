@@ -51,6 +51,7 @@ Expected Outputs
 # Install project dependencies
 # ------------------------------
 
+""" 
 Installs all required libraries for Sentra-Guard execution.
 """
 
@@ -84,6 +85,8 @@ for module_name, package_name in REQUIRED_PACKAGES.items():
 
 if missing_packages:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", "-U", *missing_packages])
+
+
 
 """# ------------------------------
 # Core Imports
@@ -144,12 +147,12 @@ from transformers import (
 
 warnings.filterwarnings("ignore")
 
+
+
 """# ------------------------------
 # Runtime Configuration
 # Configure Sentra-Guard settings
 # ------------------------------
-
-Defines runtime settings, model checkpoints, and training hyperparameters.
 """
 
 @dataclass
@@ -233,6 +236,8 @@ EXPORT_DIR = ARTIFACT_DIR / "exports"
 for path in (ARTIFACT_DIR, CHECKPOINT_DIR, RETRIEVAL_DIR, EXPORT_DIR):
     path.mkdir(parents=True, exist_ok=True)
 
+
+
 """# ------------------------------
 # Reproducibility Setup
 # Set deterministic execution
@@ -269,6 +274,8 @@ def seed_worker(worker_id: int) -> None:
     random.seed(worker_seed)
     np.random.seed(worker_seed)
 
+
+
 """# ------------------------------
 # Dataset Loading
 # Load JailBreakV-28K dataset
@@ -279,6 +286,8 @@ Loads the benchmark dataset used for harmful prompt detection.
 
 jbv_hf = load_dataset(config.dataset_name, config.dataset_config_name)
 jbv_raw_df = jbv_hf[config.dataset_split_name].to_pandas()
+
+
 
 """# ------------------------------
 # Dataset Profiling
@@ -299,6 +308,8 @@ print("Format distribution:")
 display(format_distribution.to_frame("count"))
 print("Policy distribution:")
 display(policy_distribution.to_frame("count").head(20))
+
+
 
 """# ------------------------------
 # Dataset Preparation Helpers
@@ -429,6 +440,8 @@ train_df = build_binary_single_dataset_frame(train_raw_df.reset_index(drop=True)
 val_df = build_binary_single_dataset_frame(val_raw_df.reset_index(drop=True), "validation")
 test_df = build_binary_single_dataset_frame(test_raw_df.reset_index(drop=True), "test")
 
+
+
 """# ------------------------------
 # Dataset Verification
 # Validate dataset splits
@@ -454,6 +467,9 @@ def verify_dataset_splits() -> None:
 
 verify_dataset_splits()
 
+
+
+
 """# ------------------------------
 # Text Normalization Helpers
 # Clean and standardize inputs
@@ -474,6 +490,9 @@ def clean_text(text: Any) -> str:
     text = text.replace("\x00", " ")
     text = MULTISPACE_RE.sub(" ", text).strip()
     return text
+
+
+
 
 """# ------------------------------
 # Language Processing Helpers
@@ -659,6 +678,8 @@ train_df = preprocess_dataframe(train_df)
 val_df = preprocess_dataframe(val_df)
 test_df = preprocess_dataframe(test_df)
 
+
+
 """# ------------------------------
 # Dataset Cleaning
 # Clean and validate samples
@@ -713,6 +734,9 @@ train_df = clean_training_dataframe(train_df, "train_df")
 val_df = clean_training_dataframe(val_df, "val_df")
 test_df = clean_training_dataframe(test_df, "test_df")
 
+
+
+
 """# ------------------------------
 # Classifier Configuration
 # Resolve active model checkpoint
@@ -732,6 +756,9 @@ if classifier_tokenizer.pad_token is None:
     classifier_tokenizer.pad_token = classifier_tokenizer.eos_token if classifier_tokenizer.eos_token is not None else "[PAD]"
 
 print(f"Tokenizer checkpoint: {config.classifier_model_name}")
+
+
+
 
 """# ------------------------------
 # Input Dataset Helpers
@@ -843,6 +870,9 @@ def build_text_only_dataloader(
         generator=build_torch_generator(config.random_seed),
     )
 
+
+
+
 """# ------------------------------
 # DataLoader Helpers
 # Create batched data loaders
@@ -897,6 +927,9 @@ print(f"Train batches: {len(train_loader)}")
 print(f"Validation batches: {len(val_loader)}")
 print(f"Test batches: {len(test_loader)}")
 
+
+
+
 """# ------------------------------
 # Classifier Initialization
 # Load transformer classifier
@@ -924,6 +957,9 @@ if getattr(classifier_model.config, "pad_token_id", None) is None and classifier
 classifier_model = classifier_model.to(config.device).float()
 
 print(f"Model checkpoint: {config.classifier_model_name}")
+
+
+
 
 """# ------------------------------
 # Loss Functions
@@ -1003,6 +1039,9 @@ criterion = SafeCrossEntropyLoss(class_weights)
 
 print("Class weights:", class_weights.detach().cpu().numpy())
 
+
+
+
 """# ------------------------------
 # Optimizer Setup
 # Configure parameter updates
@@ -1016,6 +1055,9 @@ optimizer = AdamW(
     lr=2e-5,
     weight_decay=0.01,
 )
+
+
+
 
 """# ------------------------------
 # Scheduler Setup
@@ -1037,6 +1079,9 @@ scheduler = get_linear_schedule_with_warmup(
 
 print(f"Total steps: {total_steps}")
 print(f"Warmup steps: {warmup_steps}")
+
+
+
 
 """# ------------------------------
 # Training Debug Helpers
@@ -1178,6 +1223,9 @@ scheduler = get_linear_schedule_with_warmup(
 
 print(f"Scheduler total steps: {total_steps}")
 print(f"Scheduler warmup steps: {warmup_steps}")
+
+
+
 
 """# ------------------------------
 # Training Pipeline
@@ -1514,6 +1562,9 @@ print(train_df.head())
 print(train_df['label'].value_counts(dropna=False))
 print(train_df['text'].isna().sum())
 
+
+
+
 """# ------------------------------
 # Retrieval Encoder
 # Initialize semantic retriever
@@ -1529,6 +1580,9 @@ retrieval_model = SentenceTransformer(
 )
 
 print(f"Retrieval encoder: {retrieval_model_name}")
+
+
+
 
 """# ------------------------------
 # Retrieval Corpus Construction
@@ -1581,6 +1635,9 @@ retrieval_corpus_embeddings = encode_texts_for_retrieval(
 print(f"Retrieval corpus size: {len(retrieval_corpus_df):,}")
 print(f"Retrieval embedding shape: {retrieval_corpus_embeddings.shape}")
 
+
+
+
 """# ------------------------------
 # Retrieval Index
 # Build FAISS search engine
@@ -1597,6 +1654,9 @@ faiss_index.add(retrieval_index_embeddings)
 
 print(f"FAISS index size: {faiss_index.ntotal:,}")
 print(f"Embedding dimension: {retrieval_index_embeddings.shape[1]}")
+
+
+
 
 """# ------------------------------
 # Retrieval Scoring
@@ -1639,6 +1699,9 @@ def compute_retrieval_scores(
 sample_retrieval_scores = compute_retrieval_scores(test_df["text"].head(5).tolist())
 print(sample_retrieval_scores)
 
+
+
+
 """# ------------------------------
 # Zero-Shot Initialization
 # Load NLI safety model
@@ -1659,6 +1722,9 @@ zero_shot_classifier = pipeline(
 
 zero_shot_candidate_labels = ["harmful", "benign"]
 print(f"Zero-shot model: {zero_shot_model_name}")
+
+
+
 
 """# ------------------------------
 # Zero-Shot Scoring
@@ -1701,6 +1767,9 @@ def compute_zero_shot_scores(
 sample_zero_shot_scores = compute_zero_shot_scores(test_df["text"].head(5).tolist())
 print(sample_zero_shot_scores)
 
+
+
+
 """# ------------------------------
 # Hybrid Decision Fusion
 # Combine multi-source risk signals
@@ -1733,6 +1802,9 @@ def compute_final_scores(
     return final_scores
 
 print("Fusion function ready.")
+
+
+
 
 """# ------------------------------
 # Threshold Optimization
@@ -1846,6 +1918,9 @@ config.threshold = float(best_threshold)
 print(f"Best threshold: {config.threshold}")
 display(threshold_search_df.head(10))
 
+
+
+
 """# ------------------------------
 # Fusion Optimization
 # Optimize ensemble weights
@@ -1920,6 +1995,9 @@ print(f"Best fusion weights: {config.fusion_weights}")
 print(f"Best threshold after joint search: {config.threshold}")
 display(weight_search_df.head(10))
 
+
+
+
 """# ------------------------------
 # Decision Engine
 # Score and classify prompts
@@ -1986,6 +2064,9 @@ test_scored = score_split(test_df, "test")
 
 display(test_scored[["text", "classifier_score", "retrieval_score", "zero_shot_score", "final_score", "pred_label_name", "needs_hitl"]].head())
 
+
+
+
 """# ------------------------------
 # HITL Adaptive Memory
 # Update adversarial memory bank
@@ -2029,6 +2110,9 @@ def update_adversarial_memory(new_harmful_prompts: Sequence[str]) -> int:
 
 added_count = update_adversarial_memory([])
 print(f"HITL memory updater ready. Added now: {added_count}")
+
+
+
 
 """# ------------------------------
 # Baseline Models
@@ -2130,6 +2214,9 @@ full_ensemble_test_df = run_full_ensemble_baseline(test_df, "test_full_ensemble"
 
 display(full_ensemble_test_df[["text", "score", "pred_label_name"]].head())
 
+
+
+
 """# ------------------------------
 # Evaluation Pipeline
 # Measure Sentra-Guard performance
@@ -2204,6 +2291,9 @@ final_metrics_df = pd.DataFrame([sentra_guard_report])
 display(final_metrics_df)
 display(baseline_results_df)
 
+
+
+
 """# ------------------------------
 # Confusion Matrix
 # Visualize prediction outcomes
@@ -2228,6 +2318,9 @@ plt.xlabel("Predicted Label")
 plt.ylabel("True Label")
 plt.tight_layout()
 plt.show()
+
+
+
 
 """# ------------------------------
 # Ablation Study
@@ -2296,6 +2389,9 @@ for ablation_name, ablation_weights in ablation_specs.items():
 ablation_df = pd.DataFrame(ablation_rows)
 display(ablation_df)
 
+
+
+
 """# ------------------------------
 # Performance Visualization
 # Plot training and evaluation curves
@@ -2336,6 +2432,9 @@ axes[2].grid(alpha=0.3)
 plt.tight_layout()
 plt.show()
 
+
+
+
 """# ------------------------------
 # Demo Inference
 # Run example prompt detection
@@ -2373,6 +2472,9 @@ display(
         ]
     ]
 )
+
+
+
 
 """# ------------------------------
 # Export Artifacts

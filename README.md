@@ -1,4 +1,4 @@
-# Sentra-Guard: A Multilingual Human-AI Framework for Real-Time Defense Against Adversarial LLM Jailbreaks
+# Sentra-Guard: A Real-Time Multilingual Defense Against Adversarial LLM Prompts
 
 [![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2510.22628)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
@@ -7,7 +7,7 @@
 
 Official implementation of **Sentra-Guard**, a modular multilingual defense framework for detecting and mitigating adversarial jailbreak and prompt injection attacks against Large Language Models (LLMs).
 
-Repository: [Sentra-Guard GitHub Repository](https://github.com/Mehedi16009/Sentra-Guard?utm_source=chatgpt.com)
+Repository: [Sentra-Guard GitHub Repository](https://github.com/Mehedi16009/Sentra-Guard/)
 
 ---
 
@@ -35,8 +35,11 @@ This architecture enables robust defense against:
 > Add Sentra-Guard methodology architecture image here.
 
 ```text
-[Figure_2.pdf](https://github.com/user-attachments/files/27548354/Figure_2.pdf)]
+[Figure_2.pdf](https://github.com/user-attachments/files/27548354/Figure_2.pdf)
 ```
+Figure 1. Sentra-Guard framework overview: An end-to-end multilingual human-AI defense pipeline for real-time adversarial LLM jailbreak detection, integrating input normalization, fine-tuned classifier inference, SBERT-FAISS semantic retrieval, zero-shot NLI reasoning, hybrid risk fusion, threshold-based decision making, and human-in-the-loop adaptive memory updates.
+
+
 
 ---
 

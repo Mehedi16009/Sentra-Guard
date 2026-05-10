@@ -192,31 +192,32 @@ Recommended:
 ```text
 Sentra-Guard/
 │
-├── notebooks/
-│   ├── sentra_guard_pipeline.ipynb
+├── images/
+│   ├── framework.pdf
+│   ├── motivation.pdf
+│   ├── confusion_matrix.png
+│   ├── comparative_analysis.png
+│   ├── heatmap.png
+│   ├── pareto_analysis.png
+│   ├── precision_recall_curve.png
+│   └── roc_curve.png
 │
-├── data/
-│   ├── raw/
-│   ├── processed/
-│
-├── checkpoints/
-│   ├── classifier/
-│   ├── retrieval_index/
-│
-├── outputs/
-│   ├── metrics.json
-│   ├── predictions.csv
-│   ├── ablation.csv
-│   ├── baseline_results.csv
-│
-├── wiki/
-│   ├── methodology.md
-│   ├── experimental_results.md
-│
-├── requirements.txt
-├── run_sentra_guard.py
+├── sentra_guard_jbv_artifacts/
+│   ├──checkpoints/
+│      ├── classifier/
+│          ├── config.json
+│          ├── tokenizer.json
+│          └── tokenizer_config.json
+│      
+│      
+│          
+│          
 ├── README.md
-└── LICENSE
+├── LICENSE
+├── requirements.txt
+├── environment.yml
+├── sentra_guard_runner.py
+
 ```
 
 ---

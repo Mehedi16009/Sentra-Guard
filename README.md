@@ -190,7 +190,16 @@ Recommended:
 ## Repository Structure
 
 ```text
+
 Sentra-Guard/
+├── README.md
+├── LICENSE
+├── requirements.txt
+├── environment.yml
+├── sentra_guard_runner.py
+│
+├── checkpoints/
+│   └── classifier/
 │
 ├── images/
 │   ├── framework.pdf
@@ -202,21 +211,36 @@ Sentra-Guard/
 │   ├── precision_recall_curve.png
 │   └── roc_curve.png
 │
-├── sentra_guard_jbv_artifacts/
-│   ├──checkpoints/
-│      ├── classifier/
-│          ├── config.json
-│          ├── tokenizer.json
-│          └── tokenizer_config.json
-│      
-│      
-│          
-│          
-├── README.md
-├── LICENSE
-├── requirements.txt
-├── environment.yml
-├── sentra_guard_runner.py
+├── scripts/
+│   ├── train.py
+│   ├── evaluate.py
+│   ├── retrieval.py
+│   ├── inference.py
+│   ├── fusion.py
+│   ├── thresholding.py
+│   ├── visualization.py
+│   ├── export_results.py
+│   └── hitl.py
+├── models/
+│   ├── classifier_model.py
+│   ├── retrieval_model.py
+│   └── zero_shot_model.py
+├── preprocessing/
+│   ├── normalization.py
+│   ├── translation.py
+│   ├── data_preparation.py
+│   └── tokenization.py
+├── utils/
+│   ├── config.py
+│   ├── helpers.py
+│   ├── metrics.py
+│   ├── logging_utils.py
+│   └── seed.py
+└── visualizations/
+    ├── roc_curve.py
+    ├── pr_curve.py
+    ├── heatmap.py
+    └── confusion_matrix.py
 
 ```
 

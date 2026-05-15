@@ -1,23 +1,26 @@
-name: sentra-guard
+name: sentra_guard
 channels:
   - pytorch
+  - nvidia
   - conda-forge
+  - defaults
 dependencies:
-  - python=3.11
-  - pip=24.2
-  - numpy<2
-  - pandas=2.2.3
-  - scikit-learn=1.5.2
-  - matplotlib=3.9.2
-  - pytorch=2.5.1
+  - python=3.10
+  - pip
   - pip:
-      - transformers==4.46.3
-      - accelerate==1.1.1
-      - datasets==3.1.0
-      - sentencepiece==0.2.0
-      - sentence-transformers==3.3.1
-      - faiss-cpu==1.9.0.post1
-      - langdetect==1.0.9
-      - tqdm==4.66.5
-      - pyarrow==18.1.0
-      - pytest==8.3.3
+    - transformers>=4.40.0
+    - sentence-transformers>=2.7.0
+    - faiss-cpu>=1.8.0
+    - datasets>=2.18.0
+    - accelerate>=0.29.0
+    - scikit-learn>=1.4.0
+    - pandas>=2.2.0
+    - numpy>=1.26.0
+    - matplotlib>=3.8.0
+    - seaborn>=0.13.0
+    - tqdm>=4.66.0
+    - langdetect>=1.0.9
+    - sentencepiece>=0.2.0
+    - sacremoses>=0.1.1
+    - torch>=2.2.0
+    - ipython>=8.0.0
